@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <environment include="Development">
+        <link href="~/style/style.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/style/style.css" rel="stylesheet" />
+    </environment>
+    <meta name="viewport" content="width=device-width" />
+    <title>Syntacs-Error</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <ul class="nav">
+                <!--Add asp-controllers and actions-->
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a href="#">Error List</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="clear"><p>&copy; @DateTime.Now.Year</p></footer>
+</body>
+</html>
