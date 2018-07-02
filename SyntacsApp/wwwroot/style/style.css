@@ -1,0 +1,9 @@
+﻿@import "vendor/normalize.css";
+
+body {
+
+}
+
+ul,li {
+    display: inline-block;
+}
