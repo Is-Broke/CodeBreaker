@@ -44,8 +44,8 @@ namespace SyntacsApp.Controllers
         {
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://musiknight.com");
-                var response = client.GetAsync("api/nope").Result;
+                client.BaseAddress = new Uri("https://brokenapi.azurewebsites.net");
+                var response = client.GetAsync("api/error").Result;
 
                 if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
                 {

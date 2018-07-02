@@ -14,6 +14,6 @@ namespace SyntacsApp.Data
 
         }
 
-        DbSet<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

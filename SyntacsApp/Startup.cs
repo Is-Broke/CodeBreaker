@@ -36,11 +36,11 @@ namespace SyntacsApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseExceptionHandler("/Home/Error");
-            app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
+            //app.UseExceptionHandler("/Home/Error");
+            //app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
 
             app.UseStaticFiles();
 
