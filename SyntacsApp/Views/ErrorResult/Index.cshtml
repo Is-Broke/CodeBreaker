@@ -1,0 +1,40 @@
+﻿@model SyntacsApp.Models.ErrorResultViewModel
+
+<div class="wrapper">
+    <h1>Error Result Page (the good kind)</h1>
+
+    <div>
+        <h2>Description Div</h2>
+    </div>
+    <div>
+        <h2>Error Snippet Div</h2>
+    </div>
+    <div>
+        <h2>Console Div</h2>
+    </div>
+    <div class="comment">
+        <h2>Comment Section</h2>
+
+        @foreach (var comment in Model.Comments)
+        {
+            <p>Alias:@comment.Alias</p>
+            <p>Comment: @comment.CommentBody</p>
+
+        }
+
+        <form method="post" asp-controller="ErrorResult" asp-action="Create" asp-route-id="@Model.Error.ID">
+
+            <label asp-for="Comment.Alias">Alias</label>
+            <input asp-for="Comment.Alias" />
+            <br />
+
+            <label asp-for="Comment.CommentBody">Enter Comment</label>
+            <input asp-for="Comment.CommentBody"/>
+            <br />
+
+            <input type="hidden" asp-for="Comment.ErrExampleID"/>
+
+            <button type="submit">Add comment</button>
+        </form>
+    </div>
+</div>
