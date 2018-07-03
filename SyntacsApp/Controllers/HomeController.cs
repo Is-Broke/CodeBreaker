@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SyntacsApp.Models;
 
 namespace SyntacsApp.Controllers
 {
@@ -14,11 +15,12 @@ namespace SyntacsApp.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            //string topError = await APICallTopError();
-            //string tokens = JToken.Parse(topError).ToString();
-            //var top = JsonConvert.DeserializeObject<string>(tokens);
+            string topError = await APICallTopError();
+            string tokens = JToken.Parse(topError).ToString();
+            var top = JsonConvert.DeserializeObject<Error>(tokens);
 
-            ViewData["Test"] = "For top error test";
+            ViewData["Error Name"] = top.DetailedName;
+            ViewData["Code Example"] = top.CodeExample;
 
             return View();
         }
