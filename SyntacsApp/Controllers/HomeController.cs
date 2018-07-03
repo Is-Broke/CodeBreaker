@@ -13,19 +13,35 @@ namespace SyntacsApp.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Action that makes a request to grab the Top Rated Comment
+        /// </summary>
+        /// <returns>ErrorResultViewModel</returns>
         public async Task<IActionResult> Index()
         {
             string topErr = await APICallModel.APICallTopError();
-            string tokens = JToken.Parse(topErr).ToString();
-            Error topError = JsonConvert.DeserializeObject<Error>(tokens);
-
-            return View(ErrorResultViewModel.ViewTopError(topError));
+            if (!String.IsNullOrEmpty(topErr))
+            {
+                string tokens = JToken.Parse(topErr).ToString();
+                Error topError = JsonConvert.DeserializeObject<Error>(tokens);
+                return View(ErrorResultViewModel.ViewTopError(topError));
+            }
+            return NotFound();
         }
 
-        //public async Task<IActionResult> Search(string search)
-        //{
+        public async Task<IActionResult> Search(string search)
+        {
+            if (!String.IsNullOrEmpty(search))
+            {
+                string errorResults = await APICallModel.APICallErrorResults(search);
+                string tokens = JToken.Parse(errorResults).ToString();
+                var results = JsonConvert.DeserializeObject<Error>(tokens);
 
-        //}
+                return RedirectToAction("Index", "ErrorResult", results);
+            }
+            return RedirectToAction("Index", "ErrorList");
+        }
+
         /// <summary>
         /// Action for using a custom error page that is shared
         /// throughout the site

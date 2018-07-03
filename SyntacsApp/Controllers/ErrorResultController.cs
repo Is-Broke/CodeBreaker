@@ -27,15 +27,11 @@ namespace SyntacsApp.Controllers
         /// </summary>
         /// <param name="id">id of error</param>
         /// <returns>A ViewModel or a NotFound if no value</returns>
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(Error error)
         {
-            if (id.HasValue)
+            if (error != null)
             {
-                string errorResults = await APICallModel.APICallTopError();
-                string tokens = JToken.Parse(errorResults).ToString();
-                var errorList = JsonConvert.DeserializeObject<List<Error>>(tokens);
-
-                return View(await ErrorResultViewModel.ViewDetails(id.Value, _context, errorList));
+                return View(await ErrorResultViewModel.ViewDetailsError(error.ID, _context, error));
             }
             return NotFound();
         }
@@ -50,17 +46,16 @@ namespace SyntacsApp.Controllers
         /// modelstate fai
         /// l</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment)
+        public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment, Error error)
         {
             if (ModelState.IsValid)
             {
                 comment.ErrExampleID = id;
                 await _context.Comments.AddAsync(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", new { id });
+                return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }
-
-            return RedirectToAction("Index", new { id });
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
         }
   
     }

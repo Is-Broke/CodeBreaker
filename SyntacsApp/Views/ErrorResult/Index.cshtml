@@ -1,14 +1,31 @@
 ﻿@model SyntacsApp.Models.ErrorResultViewModel
 
 <div class="wrapper">
-    <h1>Error Result Page (the good kind)</h1>
+    <h2>@Model.Error.DetailedName</h2>
 
     <div>
-        <h2>Description Div</h2>
+        <p>Description Div</p>
     </div>
     <div>
-        <h2>Error Snippet Div</h2>
-        <p>@Model.Error.CodeExample</p>
+        <section class="top-error">
+
+            <h3>Example</h3>
+
+            <div class="code-snippet">
+                @foreach (var line in Model.CodeFormat)
+                {
+
+                    if (line.Contains("\t"))
+                    {
+                        <p>&emsp;@line</p>
+                    }
+                    else
+                    {
+                        <p>@line</p>
+                    }
+                }
+            </div>
+        </section>
     </div>
     <div>
         <h2>Console Div</h2>
@@ -23,19 +40,27 @@
 
         }
 
-        <form method="post" asp-controller="ErrorResult" asp-action="Create" asp-route-id="@Model.Error.ID">
+            <form method="post" asp-controller="ErrorResult" asp-action="Create" asp-route-id="@Model.Error.ID">
 
-            <label asp-for="Comment.Alias">Alias</label>
-            <input asp-for="Comment.Alias" />
-            <br />
+                <label asp-for="Comment.Alias">Alias</label>
+                <input asp-for="Comment.Alias" />
+                <br />
 
-            <label asp-for="Comment.CommentBody">Enter Comment</label>
-            <input asp-for="Comment.CommentBody"/>
-            <br />
+                <label asp-for="Comment.CommentBody">Enter Comment</label>
+                <input asp-for="Comment.CommentBody" />
+                <br />
 
-            <input type="hidden" asp-for="Comment.ErrExampleID"/>
+                <input type="hidden" asp-for="@Model.Error.ID" />
+                <input type="hidden" asp-for="@Model.Error.ErrorCategoryID" />
+                <input type="hidden" asp-for="@Model.Error.DetailedName" />
+                <input type="hidden" asp-for="@Model.Error.Link" />
+                <input type="hidden" asp-for="@Model.Error.Rating" />
+                <input type="hidden" asp-for="@Model.Error.Votes" />
+                <input type="hidden" asp-for="@Model.Error.Link" />
+                <input type="hidden" asp-for="@Model.Error.CodeExample" />
+                <input type="hidden" asp-for="@Model.Error.Description" />
 
-            <button type="submit">Add comment</button>
-        </form>
+                <button type="submit">Add comment</button>
+            </form>
     </div>
 </div>

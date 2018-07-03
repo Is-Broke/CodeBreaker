@@ -9,7 +9,6 @@ namespace SyntacsApp.Models
     public class APICallModel
     {
         string URL { get; } = "https://brokenapi.azurewebsites.net";
-
         /// <summary>
         /// Action uses to make a request to the Broken API to find the top
         /// voted error
@@ -58,13 +57,13 @@ namespace SyntacsApp.Models
         /// </summary>
         /// <param name="search">Search word</param>
         /// <returns>Error Results</returns>
-        public static async Task<string> APICallErrorResults(string search)
+        public static async Task<string> APICallErrorResults(string error)
         {
             APICallModel apm = new APICallModel();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apm.URL);
-                var response = client.GetAsync($"api/error/{search}").Result;
+                var response = client.GetAsync($"api/error/search/{error}").Result;
 
                 if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
                 {

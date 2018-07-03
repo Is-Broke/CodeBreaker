@@ -35,6 +35,31 @@ namespace SyntacsApp.Models
             return ervm;
         }
 
+        public static async Task<ErrorResultViewModel> ViewDetailsError(int id, SyntacsDbContext context, Error error)
+        {
+            ErrorResultViewModel ervm = new ErrorResultViewModel
+            {
+                Error = error,
+                Comments = await context.Comments.Where(c => c.ErrExampleID == id).ToListAsync(),
+            };
+
+            ervm.CodeFormat = CodeFormatter(ervm.Error);
+            return ervm;
+        }
+
+        public static ErrorResultViewModel AllDetails(List<Error> errors)
+        {
+            ErrorResultViewModel ervm = new ErrorResultViewModel
+            {
+                Errors = errors
+            };
+            return ervm;
+        }
+        /// <summary>
+        /// Method used to view the current Top Rated Error
+        /// </summary>
+        /// <param name="error">Error to pass in</param>
+        /// <returns></returns>
         public static ErrorResultViewModel ViewTopError(Error error)
         {
             ErrorResultViewModel ervm = new ErrorResultViewModel
