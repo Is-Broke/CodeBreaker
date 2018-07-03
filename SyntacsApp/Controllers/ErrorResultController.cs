@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SyntacsApp.Data;
 using SyntacsApp.Models;
 
@@ -20,16 +22,19 @@ namespace SyntacsApp.Controllers
         {
             _context = context;
         }
-
-        public async Task<IActionResult> Index(int? id)
+        /// <summary>
+        /// Action that returns the result of the error search
+        /// </summary>
+        /// <param name="id">id of error</param>
+        /// <returns>A ViewModel or a NotFound if no value</returns>
+        public async Task<IActionResult> Index(Error error)
         {
-            if (id.HasValue)
+            if (error != null)
             {
-                return View(await ErrorResultViewModel.ViewDetails(id.Value, _context));
+                return View(await ErrorResultViewModel.ViewDetailsError(error.ID, _context, error));
             }
             return NotFound();
         }
-
         /// <summary>
         /// Action that is used to create a comment entered by the user and is stored on the
         /// Syntacs Database
@@ -41,17 +46,16 @@ namespace SyntacsApp.Controllers
         /// modelstate fai
         /// l</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment)
+        public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment, Error error)
         {
             if (ModelState.IsValid)
             {
                 comment.ErrExampleID = id;
                 await _context.Comments.AddAsync(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", new { id });
+                return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }
-
-            return RedirectToAction("Index", new { id });
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
         }
   
     }

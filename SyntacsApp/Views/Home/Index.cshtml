@@ -1,7 +1,34 @@
-﻿
-<div class="wrapper">
-    @ViewData["Error Name"]
-    @ViewData["Code Example"]
+﻿@model SyntacsApp.Models.ErrorResultViewModel
 
-    <h1>This is a home view</h1>
+<div class="container">
+
+    <div id="title">
+        <h1>Have an error? Search for it</h1>
+        <p>example: NullReference Exception</p>
+    </div>
+
+    <form class="search" asp-controller="Home" asp-action="Search" method="get">
+        <input type="text" name="search" />
+        <input type="submit" value="search" />
+    </form>
+
+    <section class="top-error">
+        <h3>Current Favorite Error</h3>
+        <p>@Model.Error.DetailedName</p>
+
+        <div class="code-snippet">
+            @foreach (var line in Model.CodeFormat)
+            {
+
+                if (line.Contains("\t"))
+                {
+                    <p>&emsp;@line</p>
+                }
+                else
+                {
+                    <p>@line</p>
+                }
+            }
+        </div>
+    </section>
 </div>
