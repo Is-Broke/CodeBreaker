@@ -10,6 +10,7 @@ namespace SyntacsApp.Models
     public class ErrorResultViewModel
     {
         public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<Error> Errors { get; set; }
         public Error Error { get; set; }//PLACEHOLDER
         public Comment Comment { get; set; }
 
