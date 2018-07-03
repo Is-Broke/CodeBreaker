@@ -30,7 +30,16 @@ namespace SyntacsApp.Controllers
             return NotFound();
         }
 
-
+        /// <summary>
+        /// Action that is used to create a comment entered by the user and is stored on the
+        /// Syntacs Database
+        /// </summary>
+        /// <param name="id">ID of the current error</param>
+        /// <param name="comment">Data that is bound to a Comment object</param>
+        /// <returns>
+        /// A redirect to the error result page either with updated comments or
+        /// modelstate fai
+        /// l</returns>
         [HttpPost]
         public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment)
         {

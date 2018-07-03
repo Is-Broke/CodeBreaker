@@ -40,6 +40,7 @@ namespace SyntacsApp.Controllers
         /// voted error
         /// </summary>
         /// <returns>JSON string</returns>
+        // TODO: Make APICall Interface to avoid duped code
         public async Task<string> APICallTopError()
         {
             using(var client = new HttpClient())
