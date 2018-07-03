@@ -11,7 +11,8 @@ namespace SyntacsApp.Models
     {
         public IEnumerable<Comment> Comments { get; set; }
         public IEnumerable<Error> Errors { get; set; }
-        public Error Error { get; set; }//PLACEHOLDER
+        public string[] CodeFormat { get; set; }
+        public Error Error { get; set; }
         public Comment Comment { get; set; }
 
         /// <summary>
@@ -21,18 +22,37 @@ namespace SyntacsApp.Models
         /// <param name="id">Error ID</param>
         /// <param name="context">Context of the Syntacs Database</param>
         /// <returns>ErrorResultViewModel</returns>
-        public static async Task<ErrorResultViewModel> ViewDetails(int id, SyntacsDbContext context)
+        public static async Task<ErrorResultViewModel> ViewDetails(int id, SyntacsDbContext context, List<Error> errors)
         {
-            ErrorResultViewModel ervm = new ErrorResultViewModel();
-
-            ervm.Error = new Error
+            ErrorResultViewModel ervm = new ErrorResultViewModel
             {
-                ID = id
+                Errors = errors,
+                Error = errors.FirstOrDefault(e => e.ID == id),
+                Comments = await context.Comments.Where(c => c.ErrExampleID == id).ToListAsync(),
             };
 
-            ervm.Comments = await context.Comments.Where(c => c.ErrExampleID == id).ToListAsync();
-
+            ervm.CodeFormat = CodeFormatter(ervm.Error);
             return ervm;
+        }
+
+        public static ErrorResultViewModel ViewTopError(Error error)
+        {
+            ErrorResultViewModel ervm = new ErrorResultViewModel
+            {
+                Error = error,
+                CodeFormat = error.CodeExample.Split("\n")
+            };
+            return ervm;
+        }
+        /// <summary>
+        /// Method that formats incoming error string
+        /// </summary>
+        /// <param name="error">Error to be formatted</param>
+        /// <returns>srring array</returns>
+        public static string[] CodeFormatter(Error error)
+        {
+            string[] codeSnippet = error.CodeExample.Split("\n");
+            return codeSnippet;
         }
     }
 }

@@ -5,11 +5,34 @@ body {
     margin: 0 auto;
 }
 
+.navbar ul {
+    padding-left: 0;
+}
+
 .wrapper{
     width: 95%;
     margin: 0 auto;
 }
 
+.container{
+    width: 80%;
+    margin: 0 auto;
+}
+
 ul,li {
     display: inline-block;
+}
+
+.top-error {
+    width: 75%;
+    margin: 0 auto;
+}
+.code-snippet {
+    width: 60%;
+    margin: 10px auto;
+    padding: 15px;
+    background: #ececec;
+}
+.code-snippet>p {
+    margin: 0;
 }

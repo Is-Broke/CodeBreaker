@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SyntacsApp.Data;
 using SyntacsApp.Models;
 
@@ -20,16 +22,23 @@ namespace SyntacsApp.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Action that returns the result of the error search
+        /// </summary>
+        /// <param name="id">id of error</param>
+        /// <returns>A ViewModel or a NotFound if no value</returns>
         public async Task<IActionResult> Index(int? id)
         {
             if (id.HasValue)
             {
-                return View(await ErrorResultViewModel.ViewDetails(id.Value, _context));
+                string errorResults = await APICallModel.APICallTopError();
+                string tokens = JToken.Parse(errorResults).ToString();
+                var errorList = JsonConvert.DeserializeObject<List<Error>>(tokens);
+
+                return View(await ErrorResultViewModel.ViewDetails(id.Value, _context, errorList));
             }
             return NotFound();
         }
-
         /// <summary>
         /// Action that is used to create a comment entered by the user and is stored on the
         /// Syntacs Database
