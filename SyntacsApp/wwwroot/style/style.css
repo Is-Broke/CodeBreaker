@@ -5,9 +5,13 @@ form {
     text-align: center;
 }
 
+.comment {
+    margin: 2vh auto;
+}
+
 #title {
     text-align: center;
-    margin: 5vh auto;
+    margin: 3vh auto;
 }
 
 @media screen and (min-width: 1001px) {
@@ -42,6 +46,12 @@ form {
     .code-snippet {
         width: 60%;
         margin: 10px auto;
+        padding: 15px;
+        background: #ececec;
+    }
+    .snippet {
+        width: 70%;
+        margin: 5px auto;
         padding: 15px;
         background: #ececec;
     }

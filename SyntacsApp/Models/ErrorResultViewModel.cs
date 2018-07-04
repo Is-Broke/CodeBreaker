@@ -10,10 +10,12 @@ namespace SyntacsApp.Models
     public class ErrorResultViewModel
     {
         public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<User> Users { get; set; }
         public IEnumerable<Error> Errors { get; set; }
         public string[] CodeFormat { get; set; }
         public Error Error { get; set; }
         public Comment Comment { get; set; }
+        public User User { get; set; }
         /// <summary>
         /// Action that pings the Syntacs Database for comments based on the the Error
         /// Example ID from the API call
@@ -27,14 +29,28 @@ namespace SyntacsApp.Models
             {
                 Errors = errors,
                 Error = errors.FirstOrDefault(e => e.ID == id),
-                Comments = await context.Comments.Where(c => c.ErrExampleID == id).ToListAsync(),
+                Users = await context.Users.ToListAsync(),
+                Comments = await context.Comments.Where(c => c.ErrExampleID == id)
+                                                 .Join(context.Users,
+                                                        c => c.UserID,
+                                                        u => u.ID,
+                                                        (comment, user) => new Comment
+                                                        {
+                                                            Alias = user.Alias,
+                                                            UserID = user.ID,
+                                                            ID = comment.ID,
+                                                            CommentBody = comment.CommentBody,
+                                                            ErrExampleID = comment.ErrExampleID,
+                                                            UpVote = comment.UpVote
+                                                        })
+                                                  .ToListAsync()
             };
 
             ervm.CodeFormat = CodeFormatter(ervm.Error);
             return ervm;
         }
         /// <summary>
-        /// Action that will grab a specific error from the API and also the comments associated with that
+        /// Action that will grab a specific error from the API and also the comments and users associated with that
         /// error
         /// </summary>
         /// <param name="id">Error ID</param>
@@ -46,9 +62,22 @@ namespace SyntacsApp.Models
             ErrorResultViewModel ervm = new ErrorResultViewModel
             {
                 Error = error,
-                Comments = await context.Comments.Where(c => c.ErrExampleID == id).ToListAsync(),
+                Users = await context.Users.ToListAsync(),
+                Comments = await context.Comments.Where(c => c.ErrExampleID == id)
+                                                 .Join(context.Users,
+                                                        c => c.UserID,
+                                                        u => u.ID,
+                                                        (comment, user) => new Comment
+                                                        {
+                                                            Alias = user.Alias,
+                                                            UserID = user.ID,
+                                                            ID = comment.ID,
+                                                            CommentBody = comment.CommentBody,
+                                                            ErrExampleID = comment.ErrExampleID,
+                                                            UpVote = comment.UpVote
+                                                        })
+                                                  .ToListAsync()
             };
-
             ervm.CodeFormat = CodeFormatter(ervm.Error);
             return ervm;
         }
