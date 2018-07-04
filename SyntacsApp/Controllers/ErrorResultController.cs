@@ -82,11 +82,23 @@ namespace SyntacsApp.Controllers
         public async Task<IActionResult> UpVote([Bind("ID")]Comment comment, Error error, int vote)
         {
             comment = _context.Comments.FirstOrDefault(i => i.ID == comment.ID);
-
             if (comment != null)
             {
                 comment.UpVote += vote;
                 _context.Comments.Update(comment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+            }
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([Bind("ID")]Comment comment, Error error)
+        {
+            comment = _context.Comments.FirstOrDefault(i => i.ID == comment.ID);
+            if (comment != null)
+            {
+                _context.Comments.Remove(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }

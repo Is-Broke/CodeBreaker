@@ -49,6 +49,12 @@ form {
         padding: 15px;
         background: #ececec;
     }
+    .snippet {
+        width: 70%;
+        margin: 5px auto;
+        padding: 15px;
+        background: #ececec;
+    }
 
         .code-snippet > p {
             margin: 0;

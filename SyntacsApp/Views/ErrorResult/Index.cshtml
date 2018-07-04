@@ -22,7 +22,7 @@
             }
         </div>
         <div>
-            <p>Description Div</p>
+            <p>@Model.Error.Description</p>
         </div>
     </section>
 
@@ -33,11 +33,16 @@
 
         @foreach (var comment in Model.Comments)
         {
-            <form asp-controller="ErrorResult" asp-action="UpVote">
+            <form class="upvote" asp-controller="ErrorResult" asp-action="UpVote">
                 <input type="hidden" asp-for="@comment.ID" />
                 <input type="hidden" asp-for="@comment.UpVote" />
                 <input type="hidden" asp-for="@Model.Error.DetailedName" />
-                <button type="submit" asp-for="@comment.UpVote" name="vote" value="1"></button>
+                <button type="submit" asp-for="@comment.UpVote" name="vote" value="1">UpVote</button>
+            </form>
+            <form class=" delete" asp-controller="ErrorResult" asp-action="Delete">
+                <input type="hidden" asp-for="@comment.ID" />
+                <input type="hidden" asp-for="@Model.Error.DetailedName" />
+                <input type="submit" value="Remove Comment" />
             </form>
             <p>@comment.Alias</p>
             <p>Comment: @comment.CommentBody</p>
