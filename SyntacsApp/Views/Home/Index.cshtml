@@ -1,21 +1,10 @@
 ﻿@model SyntacsApp.Models.ErrorResultViewModel
 
 <div class="container">
-
-    <div id="title">
-        <h1>Have an error? Search for it</h1>
-        <p>example: NullReference Exception</p>
-    </div>
-
-    <form class="search" asp-controller="Home" asp-action="Search" method="get">
-        <input type="text" name="search" />
-        <input type="submit" value="search" />
-    </form>
-
     <section class="top-error">
         <h3>Current Favorite Error</h3>
         <p>@Model.Error.DetailedName</p>
-
+        <p>Current Votes: @Model.Error.Votes</p>
         <div class="code-snippet">
             @foreach (var line in Model.CodeFormat)
             {
@@ -29,6 +18,9 @@
                     <p>@line</p>
                 }
             }
+        </div>
+        <div>
+            <p>@Model.Error.Description</p>
         </div>
     </section>
 </div>

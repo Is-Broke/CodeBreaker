@@ -19,16 +19,28 @@ namespace SyntacsApp.Controllers
         /// <returns>ErrorResultViewModel</returns>
         public async Task<IActionResult> Index()
         {
-            string topErr = await APICallModel.APICallTopError();
-            if (!String.IsNullOrEmpty(topErr))
+            try
             {
-                string tokens = JToken.Parse(topErr).ToString();
-                Error topError = JsonConvert.DeserializeObject<Error>(tokens);
-                return View(ErrorResultViewModel.ViewTopError(topError));
+                var topErr = await APICallModel.APICallTopError();
+                if (!String.IsNullOrEmpty(topErr))
+                {
+                    string tokens = JToken.Parse(topErr).ToString();
+                    Error topError = JsonConvert.DeserializeObject<Error>(tokens);
+                    return View(ErrorResultViewModel.ViewTopError(topError));
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound();
             }
             return NotFound();
         }
-
+        /// <summary>
+        /// Action that takes in a search string and sends that as part of the 
+        /// get request to the API
+        /// </summary>
+        /// <param name="search">Search string</param>
+        /// <returns>Redirects to a result or to the full list</returns>
         public async Task<IActionResult> Search(string search)
         {
             if (!String.IsNullOrEmpty(search))

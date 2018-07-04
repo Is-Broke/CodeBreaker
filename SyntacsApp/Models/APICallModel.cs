@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -71,6 +72,22 @@ namespace SyntacsApp.Models
                     return ErrorResults;
                 }
                 return "";
+            }
+        }
+        /// <summary>
+        /// Action used to update the votes of the current error
+        /// </summary>
+        /// <param name="id">id of the error</param>
+        /// <param name="error">error object that has the current votes</param>
+        /// <returns>A status code based on the result</returns>
+        public static async Task<HttpStatusCode> APICallUpVoteError(int id, Error error)
+        {
+            APICallModel apm = new APICallModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apm.URL);
+                var response = await client.PutAsJsonAsync($"/api/error/{id}", error.Votes);
+                return response.StatusCode;
             }
         }
     }

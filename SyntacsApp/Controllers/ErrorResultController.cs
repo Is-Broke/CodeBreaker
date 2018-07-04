@@ -43,20 +43,84 @@ namespace SyntacsApp.Controllers
         /// <param name="comment">Data that is bound to a Comment object</param>
         /// <returns>
         /// A redirect to the error result page either with updated comments or
-        /// modelstate fai
-        /// l</returns>
+        /// modelstate fail</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment, Error error)
+        public async Task<IActionResult> Create(int id, [Bind("CommentBody, UpVote")]Comment comment, Error error, [Bind("Alias")]User user)
         {
             if (ModelState.IsValid)
             {
                 comment.ErrExampleID = id;
+                User checkUser = _context.Users.FirstOrDefault(u => u.Alias == user.Alias);
+
+                if (checkUser == null)
+                {
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync();
+
+                    user = await _context.Users.FirstOrDefaultAsync(u => u.Alias == user.Alias);
+                    comment.UserID = user.ID;
+                }
+                else
+                {
+                    comment.UserID = checkUser.ID;
+                }
                 await _context.Comments.AddAsync(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }
             return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+        }     
+        /// <summary>
+        /// Action used to upvote favourite error examples
+        /// </summary>
+        /// <param name="id">id of the error</param>
+        /// <param name="error">Error object that binds votes and the detailed name</param>
+        /// <param name="vote">value of the vote</param>
+        /// <returns>Redirects regardless of success or not</returns>
+        public async Task<IActionResult> ErrorVote(int id, [Bind("Votes, DetailedName")]Error error, int vote)
+        {
+            error.ID = id;
+            error.Votes += vote;
+            var errorVote = await APICallModel.APICallUpVoteError(id, error);
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
         }
-  
+        /// <summary>
+        /// Action that is used to update the votes of comments on the user Database
+        /// </summary>
+        /// <param name="comment">Bind the id of the comment</param>
+        /// <param name="error">grab the name of the error</param>
+        /// <param name="vote">the value of the button to upvote</param>
+        /// <returns>Redirects to the current error result</returns>
+        [HttpPost]
+        public async Task<IActionResult> UpVote([Bind("ID")]Comment comment, Error error, int vote)
+        {
+            comment = _context.Comments.FirstOrDefault(i => i.ID == comment.ID);
+            if (comment != null)
+            {
+                comment.UpVote += vote;
+                _context.Comments.Update(comment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+            }
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+        }
+        /// <summary>
+        /// Action used to remove comments
+        /// </summary>
+        /// <param name="comment">Comment object that binds the id of the comment</param>
+        /// <param name="error">Error object that gets DetailedName bound from the form</param>
+        /// <returns>Redirects to the error after completion</returns>
+        [HttpPost]
+        public async Task<IActionResult> Delete([Bind("ID")]Comment comment, Error error)
+        {
+            comment = _context.Comments.FirstOrDefault(i => i.ID == comment.ID);
+            if (comment != null)
+            {
+                _context.Comments.Remove(comment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+            }
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+        }
     }
 }

@@ -13,13 +13,29 @@ namespace SyntacsApp.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Alias = table.Column<string>(maxLength: 20, nullable: false),
                     CommentBody = table.Column<string>(maxLength: 150, nullable: false),
+                    Alias = table.Column<string>(nullable: true),
+                    UserID = table.Column<int>(nullable: false),
+                    UpVote = table.Column<int>(nullable: false),
                     ErrExampleID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Alias = table.Column<string>(maxLength: 20, nullable: false),
+                    ErrExampleID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.ID);
                 });
         }
 
@@ -27,6 +43,9 @@ namespace SyntacsApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
