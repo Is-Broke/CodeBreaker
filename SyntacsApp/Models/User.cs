@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace SyntacsApp.Models
 {
-    public class Comment
+    public class User
     {
         public int ID { get; set; }
-        [StringLength(150), Required]
-        public string CommentBody { get; set; }
+        [StringLength(20, MinimumLength = 3), Required]
         public string Alias { get; set; }
-        public int UserID { get; set; }
-        public int UpVote { get; set; }
-        public int ErrExampleID { get; set; }
     }
 }

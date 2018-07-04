@@ -46,17 +46,31 @@ namespace SyntacsApp.Controllers
         /// modelstate fai
         /// l</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(int id, [Bind("ID,Alias,CommentBody")]Comment comment, Error error)
+        public async Task<IActionResult> Create(int id, [Bind("ID,CommentBody")]Comment comment, Error error, [Bind("Alias")]User user)
         {
             if (ModelState.IsValid)
             {
                 comment.ErrExampleID = id;
+                User checkUser = _context.Users.FirstOrDefault(u => u.Alias == user.Alias);
+
+                if (checkUser == null)
+                {
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync();
+
+                    user = await _context.Users.FirstOrDefaultAsync(u => u.Alias == user.Alias);
+                    comment.UserID = user.ID;
+                }
+                else
+                {
+                    user = checkUser;
+                    comment.UserID = user.ID;
+                }
                 await _context.Comments.AddAsync(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }
             return RedirectToAction("Search", "Home", new { search = error.DetailedName });
         }
-  
     }
 }

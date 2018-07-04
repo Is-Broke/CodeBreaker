@@ -28,7 +28,12 @@ namespace SyntacsApp.Controllers
             }
             return NotFound();
         }
-
+        /// <summary>
+        /// Action that takes in a search string and sends that as part of the 
+        /// get request to the API
+        /// </summary>
+        /// <param name="search">Search string</param>
+        /// <returns>Redirects to a result or to the full list</returns>
         public async Task<IActionResult> Search(string search)
         {
             if (!String.IsNullOrEmpty(search))

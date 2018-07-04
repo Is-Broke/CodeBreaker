@@ -28,9 +28,8 @@ namespace SyntacsApp
         {
             services.AddMvc();
             services.AddDbContext<SyntacsDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

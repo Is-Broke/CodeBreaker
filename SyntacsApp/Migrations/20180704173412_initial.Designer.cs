@@ -9,8 +9,8 @@ using SyntacsApp.Data;
 namespace SyntacsApp.Migrations
 {
     [DbContext(typeof(SyntacsDbContext))]
-    [Migration("20180702212551_added-upvote-property")]
-    partial class addedupvoteproperty
+    [Migration("20180704173412_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,9 +26,7 @@ namespace SyntacsApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Alias")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                    b.Property<string>("Alias");
 
                     b.Property<string>("CommentBody")
                         .IsRequired()
@@ -38,9 +36,28 @@ namespace SyntacsApp.Migrations
 
                     b.Property<int>("UpVote");
 
+                    b.Property<int>("UserID");
+
                     b.HasKey("ID");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("SyntacsApp.Models.User", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Alias")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("ErrExampleID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
