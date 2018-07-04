@@ -46,7 +46,7 @@ namespace SyntacsApp.Controllers
         /// modelstate fai
         /// l</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(int id, [Bind("ID,CommentBody")]Comment comment, Error error, [Bind("Alias")]User user)
+        public async Task<IActionResult> Create(int id, [Bind("CommentBody, UpVote")]Comment comment, Error error, [Bind("Alias")]User user)
         {
             if (ModelState.IsValid)
             {
@@ -63,10 +63,30 @@ namespace SyntacsApp.Controllers
                 }
                 else
                 {
-                    user = checkUser;
-                    comment.UserID = user.ID;
+                    comment.UserID = checkUser.ID;
                 }
                 await _context.Comments.AddAsync(comment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+            }
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+        }
+        /// <summary>
+        /// Action that is used to update the votes of comments on the user Database
+        /// </summary>
+        /// <param name="comment">Bind the id of the comment</param>
+        /// <param name="error">grab the name of the error</param>
+        /// <param name="vote">the value of the button to upvote</param>
+        /// <returns>Redirects to the current error result</returns>
+        [HttpPost]
+        public async Task<IActionResult> UpVote([Bind("ID")]Comment comment, Error error, int vote)
+        {
+            comment = _context.Comments.FirstOrDefault(i => i.ID == comment.ID);
+
+            if (comment != null)
+            {
+                comment.UpVote += vote;
+                _context.Comments.Update(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }

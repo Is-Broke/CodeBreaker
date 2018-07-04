@@ -5,9 +5,13 @@ form {
     text-align: center;
 }
 
+.comment {
+    margin: 2vh auto;
+}
+
 #title {
     text-align: center;
-    margin: 5vh auto;
+    margin: 3vh auto;
 }
 
 @media screen and (min-width: 1001px) {

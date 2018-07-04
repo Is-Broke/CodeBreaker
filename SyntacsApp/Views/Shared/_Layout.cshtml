@@ -23,6 +23,17 @@
         </div>
     </nav>
     <div class="wrapper">
+
+        <div id="title">
+            <h1>Have an error? Search for it</h1>
+            <p>example: NullReference Exception</p>
+        </div>
+
+        <form class="search" asp-controller="Home" asp-action="Search" method="get">
+            <input type="text" name="search" />
+            <input type="submit" value="search" />
+        </form>
+
         @RenderBody()
     </div>
     <footer class="clear"><p>&copy; @DateTime.Now.Year</p></footer>
