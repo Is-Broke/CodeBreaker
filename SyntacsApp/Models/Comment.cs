@@ -9,7 +9,7 @@ namespace SyntacsApp.Models
     public class Comment
     {
         public int ID { get; set; }
-        [StringLength(150), Required]
+        [StringLength(255), Required]
         public string CommentBody { get; set; }
         public string Alias { get; set; }
         public int UserID { get; set; }

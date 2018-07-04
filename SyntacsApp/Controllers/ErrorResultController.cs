@@ -43,8 +43,7 @@ namespace SyntacsApp.Controllers
         /// <param name="comment">Data that is bound to a Comment object</param>
         /// <returns>
         /// A redirect to the error result page either with updated comments or
-        /// modelstate fai
-        /// l</returns>
+        /// modelstate fail</returns>
         [HttpPost]
         public async Task<IActionResult> Create(int id, [Bind("CommentBody, UpVote")]Comment comment, Error error, [Bind("Alias")]User user)
         {
@@ -70,6 +69,20 @@ namespace SyntacsApp.Controllers
                 return RedirectToAction("Search", "Home", new { search = error.DetailedName });
             }
             return RedirectToAction("Search", "Home", new { search = error.DetailedName });
+        }     
+        /// <summary>
+        /// Action used to upvote favourite error examples
+        /// </summary>
+        /// <param name="id">id of the error</param>
+        /// <param name="error">Error object that binds votes and the detailed name</param>
+        /// <param name="vote">value of the vote</param>
+        /// <returns>Redirects regardless of success or not</returns>
+        public async Task<IActionResult> ErrorVote(int id, [Bind("Votes, DetailedName")]Error error, int vote)
+        {
+            error.ID = id;
+            error.Votes += vote;
+            var errorVote = await APICallModel.APICallUpVoteError(id, error);
+            return RedirectToAction("Search", "Home", new { search = error.DetailedName });
         }
         /// <summary>
         /// Action that is used to update the votes of comments on the user Database
@@ -91,7 +104,12 @@ namespace SyntacsApp.Controllers
             }
             return RedirectToAction("Search", "Home", new { search = error.DetailedName });
         }
-
+        /// <summary>
+        /// Action used to remove comments
+        /// </summary>
+        /// <param name="comment">Comment object that binds the id of the comment</param>
+        /// <param name="error">Error object that gets DetailedName bound from the form</param>
+        /// <returns>Redirects to the error after completion</returns>
         [HttpPost]
         public async Task<IActionResult> Delete([Bind("ID")]Comment comment, Error error)
         {

@@ -4,6 +4,7 @@
     <section class="top-error">
         <h3>Current Favorite Error</h3>
         <p>@Model.Error.DetailedName</p>
+        <p>Current Votes: @Model.Error.Votes</p>
         <div class="code-snippet">
             @foreach (var line in Model.CodeFormat)
             {

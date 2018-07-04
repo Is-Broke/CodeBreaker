@@ -6,7 +6,12 @@
     <section class="top-error">
 
         <h3>Example</h3>
-
+        <p>@Model.Error.Votes</p>
+        <form asp-controller="ErrorResult" asp-action="ErrorVote" asp-route-id="@Model.Error.ID">
+            <input type="hidden" asp-for="@Model.Error.DetailedName" />
+            <input type="hidden" asp-for="@Model.Error.Votes" />
+            <button type="submit" name="vote" value="1">UpVote</button>
+        </form>
         <div class="code-snippet">
             @foreach (var line in Model.CodeFormat)
             {
