@@ -35,13 +35,12 @@ namespace SyntacsApp.Controllers
             {
                 string errorResults = await APICallModel.APICallErrorResults(search);
                 string tokens = JToken.Parse(errorResults).ToString();
-                var results = JsonConvert.DeserializeObject<Error>(tokens);
+                Error results = JsonConvert.DeserializeObject<Error>(tokens);
 
                 return RedirectToAction("Index", "ErrorResult", results);
             }
             return RedirectToAction("Index", "ErrorList");
         }
-
         /// <summary>
         /// Action for using a custom error page that is shared
         /// throughout the site

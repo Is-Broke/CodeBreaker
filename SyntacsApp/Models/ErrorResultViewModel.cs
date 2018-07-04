@@ -14,7 +14,6 @@ namespace SyntacsApp.Models
         public string[] CodeFormat { get; set; }
         public Error Error { get; set; }
         public Comment Comment { get; set; }
-
         /// <summary>
         /// Action that pings the Syntacs Database for comments based on the the Error
         /// Example ID from the API call
@@ -34,7 +33,14 @@ namespace SyntacsApp.Models
             ervm.CodeFormat = CodeFormatter(ervm.Error);
             return ervm;
         }
-
+        /// <summary>
+        /// Action that will grab a specific error from the API and also the comments associated with that
+        /// error
+        /// </summary>
+        /// <param name="id">Error ID</param>
+        /// <param name="context">Syntacs DbContext</param>
+        /// <param name="error">Error</param>
+        /// <returns>ErrorResultViewModel</returns>
         public static async Task<ErrorResultViewModel> ViewDetailsError(int id, SyntacsDbContext context, Error error)
         {
             ErrorResultViewModel ervm = new ErrorResultViewModel
@@ -46,7 +52,11 @@ namespace SyntacsApp.Models
             ervm.CodeFormat = CodeFormatter(ervm.Error);
             return ervm;
         }
-
+        /// <summary>
+        /// Action that takes in a list of all errors
+        /// </summary>
+        /// <param name="errors">List of Errors from the API</param>
+        /// <returns>ErrorResultViewModel</returns>
         public static ErrorResultViewModel AllDetails(List<Error> errors)
         {
             ErrorResultViewModel ervm = new ErrorResultViewModel
