@@ -1,14 +1,14 @@
 ﻿@model SyntacsApp.Models.ErrorResultViewModel
 
-<div class="container">
+<div class="container col-lg-10">
     <div id="title">
         <h1>Available Error References</h1>
     </div>
 
-    <section class="list-result">
+    <section class="container col-lg-4 list-result">
         @foreach (var error in Model.Errors)
-        {
-            <p>@error.DetailedName</p>
+        {         
+                <p>@error.DetailedName</p>
         }
     </section>
 </div>

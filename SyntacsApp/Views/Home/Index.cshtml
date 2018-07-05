@@ -1,11 +1,11 @@
 ﻿@model SyntacsApp.Models.ErrorResultViewModel
 
-<div class="container">
-    <section class="top-error">
-        <h3>Current Favorite Error</h3>
+<div class="container col-lg-8">
+    <section class="container top-error col-lg-11">
+        <h3>Top Error</h3>
         <p>@Model.Error.DetailedName</p>
         <p>Current Votes: @Model.Error.Votes</p>
-        <div class="code-snippet">
+        <div class="col-lg-5 code-snippet">
             @foreach (var line in Model.CodeFormat)
             {
 
@@ -19,8 +19,14 @@
                 }
             }
         </div>
-        <div>
+        <div class="descript" style="margin:5vh auto;">
             <p>@Model.Error.Description</p>
+            @{
+                if (!String.IsNullOrEmpty(Model.Error.Link))
+                {
+                    <a href="@Model.Error.Link">link to docs</a>
+                }
+            }
         </div>
     </section>
 </div>

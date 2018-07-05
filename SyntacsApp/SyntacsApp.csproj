@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkcore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkcore.InMemory" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.json" Version="11.0.2" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
