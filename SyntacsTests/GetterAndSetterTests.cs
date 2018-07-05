@@ -8,10 +8,10 @@ namespace SyntacsTests
     public class GetterAndSetterTests
     {
         [Theory]
-        [InlineData("Bob",1,"Bob",1)]
-        [InlineData("Steve",20,"Steve",20)]
-        [InlineData("Jo",4,"Jo",4)]
-        [InlineData("Alice",102,"Alice",102)]
+        [InlineData("Bob", 1, "Bob", 1)]
+        [InlineData("Steve", 20, "Steve", 20)]
+        [InlineData("Jo", 4, "Jo", 4)]
+        [InlineData("Alice", 102, "Alice", 102)]
         public void UserGetAndSetTests(string alias, int id, string expectedAlias, int expectedID)
         {
             User user = new User();
@@ -21,10 +21,10 @@ namespace SyntacsTests
             Assert.Equal(expectedAlias, user.Alias);
         }
         [Theory]
-        [InlineData(1,"Test Error",1,"Test Error")]
-        [InlineData(5,"Error",5,"Error")]
-        [InlineData(200,"Test",200,"Test")]
-        [InlineData(15023,"NullRef",15023,"NullRef")]
+        [InlineData(1, "Test Error", 1, "Test Error")]
+        [InlineData(5, "Error", 5, "Error")]
+        [InlineData(200, "Test", 200, "Test")]
+        [InlineData(15023, "NullRef", 15023, "NullRef")]
         public void ErrorGetAndSetTests(int id, string name, int expectedID, string expectedName)
         {
             Error error = new Error();
