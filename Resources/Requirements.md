@@ -97,7 +97,7 @@ Wireframes for the site
 * About Page
 ![aboutpage](AboutPage.png)
 * Custom Error Message
-![customerror](Customerror.png)
+![customerror](CustomError.png)
 * Error Result and Error List 
 ![errorresult](ErrorResultPage.png)
 
