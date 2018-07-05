@@ -88,9 +88,17 @@ This is stored and updated via an HTTP-PUT request to the Broken API.
 3.2 - These views will also be clear in informing the user that something has actually gone wrong to avoid confusion with the documented errors
 ***
 ### Wireframes 
-
-Wireframe for site layout
-![wireframes v1](wireframe_v1.JPG)
-
 Wireframe for different tables both on the Broken API and Syntacs database
 ![data tables](data_tables.JPG)
+
+Wireframes for the site
+* Home Page
+![homepage](HomePage.png)
+* About Page
+![aboutpage](AboutPage.png)
+* Custom Error Message
+![customerror](Customerror.png)
+* Error Result and Error List 
+![errorresult](ErrorResultPage.png)
+
+![errorlist](ErrorList.png)
