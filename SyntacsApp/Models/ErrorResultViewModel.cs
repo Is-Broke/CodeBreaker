@@ -20,7 +20,7 @@ namespace SyntacsApp.Models
         /// Action that pings the Syntacs Database for comments based on the the Error
         /// Example ID from the API call
         /// </summary>
-        /// <param name="id">Error ID</param>
+        /// <param name="id">ErrorCategoryID</param>
         /// <param name="context">Context of the Syntacs Database</param>
         /// <returns>ErrorResultViewModel</returns>
         public static async Task<ErrorResultViewModel> ViewDetails(int id, SyntacsDbContext context, List<Error> errors)
@@ -28,7 +28,7 @@ namespace SyntacsApp.Models
             ErrorResultViewModel ervm = new ErrorResultViewModel
             {
                 Errors = errors,
-                Error = errors.FirstOrDefault(e => e.ID == id),
+                Error = errors.FirstOrDefault(e => e.ErrorCategoryID == id),
                 Users = await context.Users.ToListAsync(),
                 Comments = await context.Comments.Where(c => c.ErrExampleID == id)
                                                  .Join(context.Users,
