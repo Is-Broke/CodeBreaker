@@ -3,38 +3,45 @@
 <html>
 <head>
     <environment include="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
         <link href="~/style/style.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
         <link href="~/style/style.css" rel="stylesheet" />
     </environment>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Syntacs-Error</title>
 </head>
 <body>
-    <nav>
-        <div class="navbar">
-            <ul class="nav">
-                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-controller="ErrorList" asp-action="Index">Error List</a></li>
-                <li><a asp-controller="About" asp-action="Index">About</a></li>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background:white;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="ErrorList" asp-action="Index">Error List</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="About" asp-action="Index">About</a></li>
             </ul>
         </div>
     </nav>
     <div class="wrapper">
 
-        <div id="title">
+        <div class="container col-lg-10" id="title">
             <h1>Have an error? Search for it</h1>
             <p>example: NullReference Exception</p>
         </div>
-
-        <form class="search" asp-controller="Home" asp-action="Search" method="get">
-            <input type="text" name="search" />
-            <input type="submit" value="search" />
-        </form>
+            <form class="search" asp-controller="Home" asp-action="Search" method="get">
+                <input class="form-control-sm" type="text" name="search" style="width:25vw;"/>
+                <input class="btn btn-success" type="submit" value="search" />
+            </form>
 
         @RenderBody()
     </div>
-    <footer class="clear"><p>&copy; Syntacs-Error @DateTime.Now.Year</p></footer>
+    <footer class="fixed-bottom" style="background:white;"><p>&copy; Syntacs-Error @DateTime.Now.Year</p></footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 </html>

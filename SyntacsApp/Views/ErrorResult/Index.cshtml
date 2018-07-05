@@ -1,18 +1,10 @@
 ﻿@model SyntacsApp.Models.ErrorResultViewModel
 
-<div class="wrapper">
-    <h2>@Model.Error.DetailedName</h2>
+<div class="container col-lg-10">
+    <h2 style="margin-left: 14vw;">@Model.Error.DetailedName</h2>
 
-    <section class="top-error">
-
-        <h3>Example</h3>
-        <p>@Model.Error.Votes</p>
-        <form asp-controller="ErrorResult" asp-action="ErrorVote" asp-route-id="@Model.Error.ID">
-            <input type="hidden" asp-for="@Model.Error.DetailedName" />
-            <input type="hidden" asp-for="@Model.Error.Votes" />
-            <button type="submit" name="vote" value="1">UpVote</button>
-        </form>
-        <div class="code-snippet">
+    <section class="container col-lg-8 top-error">
+        <div class="container col-lg-8 code-snippet" style="margin-top: 3vh;">
             @foreach (var line in Model.CodeFormat)
             {
 
@@ -26,12 +18,24 @@
                 }
             }
         </div>
-        <div>
+        <div class="descript">
             <p>@Model.Error.Description</p>
+            <h4>Current Votes: @Model.Error.Votes</h4>
+            @{
+                if (!String.IsNullOrEmpty(Model.Error.Link))
+                {
+                    <a href="@Model.Error.Link">link to docs</a>
+                }
+            }
         </div>
+        <form asp-controller="ErrorResult" asp-action="ErrorVote" asp-route-id="@Model.Error.ID">
+            <input type="hidden" asp-for="@Model.Error.DetailedName" />
+            <input type="hidden" asp-for="@Model.Error.Votes" />
+            <button class="btn btn-success" type="submit" name="vote" value="1">UpVote</button>
+        </form>
     </section>
 
-    <div class="comment">
+    <div class="container col-lg-10 comment">
         <br />
         <hr />
         <h2>Comment Section</h2>
@@ -54,15 +58,17 @@
             <p>votes: @comment.UpVote</p>
         }
 
-        <form method="post" asp-controller="ErrorResult" asp-action="Create" asp-route-id="@Model.Error.ID">
+        <form class="add-comment" method="post" asp-controller="ErrorResult" asp-action="Create" asp-route-id="@Model.Error.ID">
 
             <label asp-for="User.Alias">Alias</label>
             <input asp-for="User.Alias" />
+            <span asp-validation-for="@Model.User.Alias" class="text-danger"></span>
             <br />
 
             @Html.TextArea("CommentBody", "Enter comment", new {
                                            @class = "comment", rows = 5, cols = 30 })
             <br />
+            <span asp-validation-for="@Model.Comment.CommentBody" class="text-danger"></span>
 
             <input type="hidden" asp-for="@Model.Error.DetailedName" />
             <button type="submit">Add comment</button>
