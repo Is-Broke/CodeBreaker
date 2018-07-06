@@ -14,7 +14,7 @@
     <title>Syntacs-Error</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light" style="background:white;">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light" id="mainnav" style="background:white;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,14 +32,14 @@
             <h1>Have an error? Search for it</h1>
             <p>example: NullReference Exception</p>
         </div>
-            <form class="search" asp-controller="Home" asp-action="Search" method="get">
+            <form class="container search" asp-controller="Home" asp-action="Search" method="get">
                 <input class="form-control-sm" type="text" name="search" style="width:25vw;"/>
                 <input class="btn btn-success" type="submit" value="search" />
             </form>
 
         @RenderBody()
     </div>
-    <footer class="fixed-bottom" style="background:white;"><p>&copy; Syntacs-Error @DateTime.Now.Year</p></footer>
+    <footer class="fixed-bottom" id="mainfoot" style="background:white;"><p>&copy; Syntacs-Error @DateTime.Now.Year</p></footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
