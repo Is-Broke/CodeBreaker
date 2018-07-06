@@ -1,8 +1,23 @@
 ﻿@import "vendor/normalize.css";
 
-form {
-    align-content: center;
-    text-align: center;
+.userName {
+    border: 0px transparent;
+}
+
+.userComment {
+    resize: none;
+    border: 0.25px solid black;
+    box-shadow: 2px 2px 0 rgba(12,13,14,0.1), 0 1px 2px rgba(59,64,69,0.1);
+    background: #ececec;
+}
+
+#mainnav {
+    border-bottom: 0.5px solid black;
+    box-shadow: 0 1px 0 rgba(12,13,14,0.1), 0 1px 6px rgba(59,64,69,0.1);
+}
+#mainfoot {
+    border-top: 0.5px solid black;
+    box-shadow: 0 -1px 0 rgba(12,13,14,0.1), 0 -1px 6px rgba(59,64,69,0.1);
 }
 
 .comment {
@@ -19,7 +34,7 @@ li {
 }
 
 .descript {
-    margin: 5vh auto;
+    margin: 3vh auto;
 }
 
 .add-comment{
@@ -32,11 +47,31 @@ li {
 
 .search {
     margin-bottom: 5vw;
+    align-content: center;
+    text-align: center;
+}
+
+.vote {
+    align-content: center;
+    text-align: center;
 }
 
 .code-snippet{
     font-family: Consolas;
 }
+
+a {
+    text-decoration: none;
+    color: darkslategray;
+}
+    a:hover {
+        text-decoration-style: none !important;
+        color: darkblue;
+    }
+#link {
+    text-decoration-style: none !important;
+    color: blue;
+} 
 
 @media screen and (min-width: 1001px) {
 
@@ -51,12 +86,16 @@ li {
     .code-snippet {
         margin: 10px auto;
         padding: 15px;
+        border: 0.5px solid black;
+        box-shadow: 0 3px 0 rgba(12,13,14,0.1), 0 1px 4px rgba(59,64,69,0.1);
         background: #ececec;
     }
     .snippet {
         /*width: 70%;*/
         margin: 5px auto;
         padding: 15px;
+        border: 0.5px solid black;
+        box-shadow: 0 3px 0 rgba(12,13,14,0.1), 0 1px 4px rgba(59,64,69,0.1);
         background: #ececec;
     }
 
@@ -95,6 +134,8 @@ li {
         /*width: 70%;*/
         margin: 5px auto;
         padding: 15px;
+        border: 0.5px solid black;
+        box-shadow: 0 3px 0 rgba(12,13,14,0.1), 0 1px 4px rgba(59,64,69,0.1);
         background: #ececec;
     }
 

@@ -27,11 +27,11 @@ namespace SyntacsTests
         [Fact]
         public async void MakeAPICallToGetSpecificError()
         {
-            var response = await APICallModel.APICallErrorResults("Invalid Conversion");
+            var response = await APICallModel.APICallErrorResults("dividebyzero exception");
             var tokens = JToken.Parse(response).ToString();
             Error result = JsonConvert.DeserializeObject<Error>(tokens);
 
-            Assert.Equal("Invalid Conversion", result.DetailedName);
+            Assert.Equal("DivideByZero Exception", result.DetailedName);
         }
 
     }

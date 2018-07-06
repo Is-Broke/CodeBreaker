@@ -1,9 +1,9 @@
 ﻿@model SyntacsApp.Models.ErrorResultViewModel
 
 <div class="container col-lg-10">
-    <h2 style="margin-left: 14vw;">@Model.Error.DetailedName</h2>
+    <h2 style="margin-left: 8vw;">@Model.Error.DetailedName</h2>
 
-    <section class="container col-lg-8 top-error">
+    <section class="container col-lg-10 top-error">
         <div class="container col-lg-8 code-snippet" style="margin-top: 3vh;">
             @foreach (var line in Model.CodeFormat)
             {
@@ -24,11 +24,11 @@
             @{
                 if (!String.IsNullOrEmpty(Model.Error.Link))
                 {
-                    <a href="@Model.Error.Link">link to docs</a>
+                    <a id="link" href="@Model.Error.Link">link to docs</a>
                 }
             }
         </div>
-        <form asp-controller="ErrorResult" asp-action="ErrorVote" asp-route-id="@Model.Error.ID">
+        <form class="vote" asp-controller="ErrorResult" asp-action="ErrorVote" asp-route-id="@Model.Error.ID">
             <input type="hidden" asp-for="@Model.Error.DetailedName" />
             <input type="hidden" asp-for="@Model.Error.Votes" />
             <button class="btn btn-success" type="submit" name="vote" value="1">UpVote</button>
@@ -42,36 +42,45 @@
 
         @foreach (var comment in Model.Comments)
         {
-            <form class="upvote" asp-controller="ErrorResult" asp-action="UpVote">
-                <input type="hidden" asp-for="@comment.ID" />
-                <input type="hidden" asp-for="@comment.UpVote" />
-                <input type="hidden" asp-for="@Model.Error.DetailedName" />
-                <button type="submit" asp-for="@comment.UpVote" name="vote" value="1">UpVote</button>
-            </form>
-            <form class=" delete" asp-controller="ErrorResult" asp-action="Delete">
-                <input type="hidden" asp-for="@comment.ID" />
-                <input type="hidden" asp-for="@Model.Error.DetailedName" />
-                <input type="submit" value="Remove Comment" />
-            </form>
-            <p>@comment.Alias</p>
-            <p>Comment: @comment.CommentBody</p>
+            <input type="text" readonly class="form-control-plaintext" value="@comment.Alias" />
+            @Html.TextArea("comment", comment.CommentBody, new {
+           @class = "form-control-plaintext col-lg-4 userComment",
+           @readonly = "readonly",
+           @onselect = "return false;",
+           rows = 5,
+           cols = 30
+             })
+
             <p>votes: @comment.UpVote</p>
+            <div class="form-group form-inline">
+                <form class="upvote" asp-controller="ErrorResult" asp-action="UpVote">
+                    <input type="hidden" asp-for="@comment.ID" />
+                    <input type="hidden" asp-for="@comment.UpVote" />
+                    <input type="hidden" asp-for="@Model.Error.DetailedName" />
+                    <button class="btn btn-success btn-sm" type="submit" asp-for="@comment.UpVote" name="vote" value="1">UpVote</button>
+                </form>
+                <form class=" delete" asp-controller="ErrorResult" asp-action="Delete">
+                    <input type="hidden" asp-for="@comment.ID" />
+                    <input type="hidden" asp-for="@Model.Error.DetailedName" />
+                    <input class="btn btn-danger btn-sm ml-2" type="submit" value="Remove Comment" />
+                </form>
+            </div>
         }
 
         <form class="add-comment" method="post" asp-controller="ErrorResult" asp-action="Create" asp-route-id="@Model.Error.ID">
+            <div class="form-group">
+                <input class="comment form-control col-lg-4" asp-for="User.Alias" placeholder="UserName" />
+                <span asp-validation-for="@Model.User.Alias" class="text-danger"></span>
+            </div>
+            @Html.TextArea("CommentBody", new {
+           @class = "comment form-control col-lg-4", rows = 5, cols = 30,
+           @placeholder = "Enter Comment" })
+            <span asp-validation-for="Comment.CommentBody" class="text-danger"></span>
 
-            <label asp-for="User.Alias">Alias</label>
-            <input asp-for="User.Alias" />
-            <span asp-validation-for="@Model.User.Alias" class="text-danger"></span>
-            <br />
-
-            @Html.TextArea("CommentBody", "Enter comment", new {
-                                           @class = "comment", rows = 5, cols = 30 })
-            <br />
-            <span asp-validation-for="@Model.Comment.CommentBody" class="text-danger"></span>
-
-            <input type="hidden" asp-for="@Model.Error.DetailedName" />
-            <button type="submit">Add comment</button>
+            <div class="container col-lg-4">
+                <input type="hidden" asp-for="@Model.Error.DetailedName" />
+                <button class="form-control btn-success" type="submit">Add comment</button>
+            </div>
         </form>
     </div>
 </div>
