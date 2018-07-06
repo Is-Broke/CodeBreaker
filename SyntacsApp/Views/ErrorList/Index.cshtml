@@ -7,8 +7,12 @@
 
     <section class="container col-lg-4 list-result">
         @foreach (var error in Model.Errors)
-        {         
-                <p>@error.DetailedName</p>
+        {
+            <a asp-controller="Home" asp-action="Search" asp-route-search="@error.DetailedName">
+                <p>
+                    @error.DetailedName
+                </p>
+            </a>
         }
     </section>
 </div>

@@ -5,7 +5,7 @@
         <h3>Top Error</h3>
         <p>@Model.Error.DetailedName</p>
         <p>Current Votes: @Model.Error.Votes</p>
-        <div class="col-lg-5 code-snippet">
+        <div class="col-lg-10 code-snippet">
             @foreach (var line in Model.CodeFormat)
             {
 
@@ -24,7 +24,7 @@
             @{
                 if (!String.IsNullOrEmpty(Model.Error.Link))
                 {
-                    <a href="@Model.Error.Link">link to docs</a>
+                    <a id="link" href="@Model.Error.Link">link to docs</a>
                 }
             }
         </div>
