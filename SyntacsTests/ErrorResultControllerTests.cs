@@ -24,13 +24,13 @@ namespace SyntacsTests
 
             using (SyntacsDbContext context = new SyntacsDbContext(options))
             {
-                string errorResult = await APICallModel.APICallErrorResults("Invalid Conversion");
+                string errorResult = await APICallModel.APICallErrorResults("Invalid Assignment");
                 string tokens = JToken.Parse(errorResult).ToString();
                 Error results = JsonConvert.DeserializeObject<Error>(tokens);
 
                 var ervm = await ErrorResultViewModel.ViewDetailsError(results.ID, context, results);
 
-                Assert.Equal("Invalid Conversion", ervm.Error.DetailedName);
+                Assert.Equal("Invalid Assignment", ervm.Error.DetailedName);
             }
         }
         [Fact]

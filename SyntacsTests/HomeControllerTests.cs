@@ -21,7 +21,7 @@ namespace SyntacsTests
         public void HomeControllerRedirectsToErrorResult()
         {
             HomeController hc = new HomeController();
-            var result  = hc.Search("Invalid Conversion").Result;
+            var result  = hc.Search("Invalid Assignment").Result;
             RedirectToActionResult routeResult = result as RedirectToActionResult;
             Assert.Equal("ErrorResult", routeResult.ControllerName);
         }
