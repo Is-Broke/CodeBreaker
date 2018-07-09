@@ -45,11 +45,17 @@ namespace SyntacsApp.Controllers
         {
             if (!String.IsNullOrEmpty(search))
             {
-                string errorResults = await APICallModel.APICallErrorResults(search);
-                string tokens = JToken.Parse(errorResults).ToString();
-                Error results = JsonConvert.DeserializeObject<Error>(tokens);
-
-                return RedirectToAction("Index", "ErrorResult", results);
+                try
+                {
+                    string errorResults = await APICallModel.APICallErrorResults(search);
+                    string tokens = JToken.Parse(errorResults).ToString();
+                    Error results = JsonConvert.DeserializeObject<Error>(tokens);
+                    return RedirectToAction("Index", "ErrorResult", results);
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
             }
             return RedirectToAction("Index", "ErrorList");
         }

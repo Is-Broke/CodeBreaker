@@ -5,7 +5,7 @@ using SyntacsApp.Controllers;
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SyntacsApp.Data;
+using System.Net;
 
 namespace SyntacsTests
 {
@@ -32,6 +32,14 @@ namespace SyntacsTests
             var result = hc.Search("").Result;
             RedirectToActionResult routeResult = result as RedirectToActionResult;
             Assert.Equal("ErrorList", routeResult.ControllerName);
+        }
+        [Fact]
+        public async void HomeControllerExceptionGetsCaught()
+        {
+            HomeController hc = new HomeController();
+            var result = await hc.Search("asgrgararh");
+            var notFound = result as NotFoundResult;
+            Assert.Equal(404, notFound.StatusCode);
         }
     }
 }

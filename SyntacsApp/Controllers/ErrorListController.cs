@@ -18,11 +18,17 @@ namespace SyntacsApp.Controllers
         /// <returns>ErrorViewModel</returns>
         public async Task<IActionResult> Index()
         {
-            string errorResults = await APICallModel.APICallGetAll();
-            string tokens = JToken.Parse(errorResults).ToString();
-            var errorList = JsonConvert.DeserializeObject<List<Error>>(tokens);
-
-            return View(ErrorResultViewModel.AllDetails(errorList));
+            try
+            {
+                string errorResults = await APICallModel.APICallGetAll();
+                string tokens = JToken.Parse(errorResults).ToString();
+                var errorList = JsonConvert.DeserializeObject<List<Error>>(tokens);
+                return View(ErrorResultViewModel.AllDetails(errorList));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
     }
 }
